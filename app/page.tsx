@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import GovernmentPrep from "./government-prep";
+import ExamStudyLibrary from "./exam-study-library";
 
 const steps = [
   ["অ্যাকাউন্ট","অ্যাকাউন্ট তৈরি ও যাচাই"],["প্রোফাইল প্রশ্নমালা","যোগ্যতা, দক্ষতা ও লক্ষ্য"],
@@ -26,6 +27,7 @@ function Home({start,startGov}:{start:(n?:number)=>void,startGov:()=>void}){
   </div></section>
   <section className="explore" id="explore"><div className="wrap"><Header light kicker="আপনার পরীক্ষার লক্ষ্য বেছে নিন" title={<>একটি লক্ষ্য।<br/><em>ব্যক্তিগত প্রস্তুতির পথ।</em></>} copy="পরীক্ষা নির্বাচন করুন, ডায়াগনস্টিক দিন এবং আপনার দুর্বল বিষয়, সিলেবাস কভারেজ ও প্রস্তুতির সময় অনুযায়ী ব্যক্তিগত স্টাডি প্ল্যান পান।"/><div className="careerGrid examGrid">{exams.map((c,i)=><button className="career" key={c[0]} onClick={startGov}><div className={"art art"+i}><b>{c[3]}</b><small>{c[2]}</small></div><div><h3>{c[0]}</h3><p>{c[1]}</p><span>↗</span></div></button>)}</div><button className="all" onClick={startGov}>সব পরীক্ষার প্রস্তুতি দেখুন →</button></div></section>
   <section className="section wrap journey" id="journey"><div className="journeyIntro"><span className="kicker">আপনার ক্যারিয়ার যাত্রা</span><h2>একটি স্পষ্ট পথ।<br/><em>দশটি অর্থবহ ধাপ।</em></h2><p>আপনি শেখা, দক্ষতা গড়া ও সুযোগের সঙ্গে যুক্ত হওয়ার সঙ্গে সঙ্গে পরিকল্পনাটি বদলাবে। সহায়তা প্রয়োজন হলে কাউন্সেলর পাশে থাকবেন।</p><button className="primary" onClick={()=>start(0)}>আমার পথ দেখুন →</button></div><div className="timeline">{steps.map((s,i)=><button key={s[0]} onClick={()=>start(i)}><i>{String(i+1).padStart(2,"0")}</i><span><b>{s[0]}</b><small>{s[1]}</small></span><em>→</em></button>)}</div></section>
+  <ExamStudyLibrary startGov={startGov}/>
   <Pricing startGov={startGov}/>
   <section className="cta" id="opportunities"><div className="wrap"><div><span className="kicker">আপনি প্রস্তুত হলেই</span><h2>ক্যারিয়ারের জন্য নিখুঁত পরিকল্পনা নয়,<br/>প্রয়োজন শুধু <em>প্রথম পদক্ষেপ।</em></h2></div><button onClick={()=>start(0)}>যাত্রা শুরু করুন →</button></div></section>
   <footer><div className="wrap footer"><Mark/><p>দক্ষতা। দিকনির্দেশনা। সুযোগ।<br/>সবকিছু এক জায়গায়।</p><div><b>অন্বেষণ</b><a href="#explore">ক্যারিয়ার</a><a href="#services">প্রশিক্ষণ</a><a href="#opportunities">চাকরি ও ইভেন্ট</a></div><div><b>সহায়তা</b><a href="#journey">কীভাবে কাজ করে</a><button onClick={()=>start(6)}>কাউন্সেলিং বুক করুন</button><a href="#">কেন্দ্র খুঁজুন</a></div><div><b>যোগাযোগ</b><a href="https://careerhub.brac.net/">বর্তমান ক্যারিয়ার হাব</a><a href="https://www.facebook.com/careerhub.brac">ফেসবুক</a></div></div><div className="wrap copyright">© BRAC Career Hub <span>প্ল্যাটফর্ম পুনর্নকশার ধারণা</span></div></footer>

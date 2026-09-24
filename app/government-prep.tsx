@@ -12,15 +12,13 @@ const examOptions = [
 ];
 
 const prepSteps = [
-  "পরীক্ষা",
-  "ডায়াগনস্টিক",
-  "পরিকল্পনা",
-  "শেখা",
-  "MCQ",
-  "রিসোর্স",
-  "মক পরীক্ষা",
-  "AI ফিডব্যাক",
-  "প্রস্তুতি রিপোর্ট",
+  "পরীক্ষা নির্বাচন",
+  "প্রস্তুতি লাইব্রেরি",
+  "AI বেসলাইন ডায়াগনস্টিক",
+  "অভিযোজিত মাস্টারি পরিকল্পনা",
+  "দৈনিক শেখা ও অনুশীলন",
+  "কুইজ, মক ও সংশোধিত পরিকল্পনা",
+  "রেডিনেস ও পাস-থ্রেশহোল্ড",
 ];
 const pastPapers = [
   ["৪৬তম BCS প্রিলিমিনারি", "২০০ প্রশ্ন · উত্তর ও ব্যাখ্যাসহ", "download"],
@@ -126,7 +124,7 @@ export default function GovernmentPrep({ exit }: { exit: () => void }) {
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [resourceTab, setResourceTab] = useState<"papers" | "books">("papers");
 
-  const next = () => setStep((s) => Math.min(8, s + 1));
+  const next = () => setStep((s) => Math.min(6, s + 1));
   const back = () => (step ? setStep((s) => s - 1) : exit());
   const screens = [
     <section className="gp-screen" key="exam">
@@ -145,10 +143,17 @@ export default function GovernmentPrep({ exit }: { exit: () => void }) {
             className={exam === i ? "selected" : ""}
             onClick={() => setExam(i)}
           >
-            <i>{["▥", "৳", "◇", "✎"][i]}</i>
-            <b>{item[0]}</b>
-            <small>{item[1]}</small>
-            <em>{exam === i ? "✓ নির্বাচিত" : "নির্বাচন করুন →"}</em>
+            <div
+              className={`gp-exam-art art-${i}`}
+              aria-hidden="true"
+            >
+              <strong>{item[0]}</strong>
+            </div>
+            <div className="gp-exam-copy">
+              <b>{item[0]} প্রস্তুতি</b>
+              <small>{item[1]}</small>
+              <em>{exam === i ? "✓ নির্বাচিত" : "নির্বাচন করুন →"}</em>
+            </div>
           </button>
         ))}
       </div>
@@ -159,7 +164,7 @@ export default function GovernmentPrep({ exit }: { exit: () => void }) {
         </span>
       </div>
     </section>,
-    <AdaptivePractice key="diagnostic" onComplete={() => setStep(2)} />,
+    <AdaptivePractice key="diagnostic" onComplete={() => setStep(3)} />,
     <section className="gp-screen gp-dashboard" key="plan">
       <div className="gp-dash-welcome">
         <div>
@@ -780,6 +785,18 @@ export default function GovernmentPrep({ exit }: { exit: () => void }) {
       </div>
     </section>,
   ];
+  const journeyScreens = [
+    screens[0],
+    screens[5],
+    screens[1],
+    screens[2],
+    screens[3],
+    <div className="gp-cycle-screen" key="quiz-mock-cycle">
+      {screens[6]}
+      {screens[7]}
+    </div>,
+    screens[8],
+  ];
 
   return (
     <main className="gp-portal">
@@ -791,7 +808,7 @@ export default function GovernmentPrep({ exit }: { exit: () => void }) {
           <button onClick={exit}>হোম</button>
           <button>ক্যারিয়ার ও চাকরি</button>
           <button className="active">পরীক্ষার প্রস্তুতি</button>
-          <button onClick={() => setStep(5)}>রিসোর্স</button>
+          <button onClick={() => setStep(1)}>রিসোর্স</button>
           <button>কাউন্সেলিং</button>
           <button>CV টুলস</button>
         </nav>
@@ -806,9 +823,9 @@ export default function GovernmentPrep({ exit }: { exit: () => void }) {
             <small>{examOptions[exam][0]} প্রস্তুতি</small>
             <b>আপনার অগ্রগতি</b>
             <div>
-              <i style={{ width: (step + 1) * (100 / 9) + "%" }} />
+              <i style={{ width: (step + 1) * (100 / 7) + "%" }} />
             </div>
-            <span>৯টি ধাপের মধ্যে {step + 1}টি</span>
+            <span>৭টি ধাপের মধ্যে {step + 1}টি</span>
           </div>
           {prepSteps.map((x, i) => (
             <button
@@ -824,15 +841,13 @@ export default function GovernmentPrep({ exit }: { exit: () => void }) {
                 <small>
                   {
                     [
-                      "লক্ষ্য ঠিক করুন",
-                      "বর্তমান অবস্থা জানুন",
-                      "পথ তৈরি করুন",
-                      "AI টিউটরের সঙ্গে",
-                      "দৈনিক অনুশীলন",
-                      "MCQ, লিখিত, বিগত প্রশ্ন ও কনটেন্ট",
-                      "পরীক্ষার অভিজ্ঞতা",
-                      "ভুল বুঝুন",
-                      "অগ্রগতি জানুন",
+                      "BCS, Bank, NTRCA বা Primary",
+                      "MCQ, কনটেন্ট, বই ও বিগত প্রশ্ন",
+                      "সিলেবাস ও অধ্যায়ভিত্তিক বর্তমান অবস্থা",
+                      "দুর্বলতা অনুযায়ী কঠিনতার স্তর ও টপিক মাস্টারি",
+                      "ভিডিও, MCQ ও লিখিত অনুশীলন",
+                      "ঘন ঘন মূল্যায়ন, AI ফিডব্যাক ও নতুন পরিকল্পনা",
+                      "পাস নম্বরের ব্যবধান ও পরবর্তী করণীয়",
                     ][i]
                   }
                 </small>
@@ -846,11 +861,11 @@ export default function GovernmentPrep({ exit }: { exit: () => void }) {
           </div>
         </aside>
         <div className="gp-workspace">
-          <div className="gp-content">{screens[step]}</div>
+          <div className="gp-content">{journeyScreens[step]}</div>
           <footer>
             <button onClick={back}>← {step ? "পেছনে" : "হোম"}</button>
-            <button className="gp-primary" onClick={step === 8 ? exit : next}>
-              {step === 8 ? "ড্যাশবোর্ডে ফিরুন ✓" : "সংরক্ষণ করে এগিয়ে যান →"}
+            <button className="gp-primary" onClick={step === 6 ? exit : next}>
+              {step === 6 ? "ড্যাশবোর্ডে ফিরুন ✓" : "সংরক্ষণ করে এগিয়ে যান →"}
             </button>
           </footer>
         </div>

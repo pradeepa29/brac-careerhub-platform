@@ -72,5 +72,3 @@ export function MyProfile({language,profile,onSave}:{language:Language;profile:P
     </form>
   </>;
 }
-
-\n

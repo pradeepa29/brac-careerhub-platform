@@ -81,5 +81,3 @@ export function Analysis({language,onComplete}:{language:Language;onComplete:()=
     <small>{text(language,["Demo analysis · your report will be ready in a few seconds.","ডেমো বিশ্লেষণ · কয়েক সেকেন্ডেই প্রতিবেদন প্রস্তুত হবে।"])}</small>
   </section>;
 }
-
-\n

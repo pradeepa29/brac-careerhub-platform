@@ -66,5 +66,3 @@ export function CVStudio({language,profile,seeded,onDraft}:{language:Language;pr
     </div>
   </div>;
 }
-
-\n

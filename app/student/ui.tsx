@@ -7,7 +7,6 @@ export function Icon({ name }: { name: string }) {
     match: "m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z",
     programs: "M4 5h6l2 2h8v13H4Z M8 12h8 M8 16h5",
     documents: "M6 3h8l4 4v14H6Z M14 3v5h4 M9 12h6 M9 16h6",
-    pathway: "M5 20v-4a4 4 0 0 1 4-4h6a4 4 0 0 0 0-8h-3 M12 1v6l-4-3Z",
     tracker: "M4 5h16v16H4Z M8 2v6 M16 2v6 M4 10h16 M8 15l3 3 5-5",
     profile: "M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0 M4 21v-2a8 8 0 0 1 16 0v2",
     search: "M16 10a6 6 0 1 1-12 0 6 6 0 0 1 12 0 M15 15l6 6",

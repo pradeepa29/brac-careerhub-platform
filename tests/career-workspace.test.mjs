@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { exampleProfile, validProfile, reportScores, visibleFields } from "../app/career/data.ts";
+import { exampleProfile, validProfile, reportScores, visibleFields, recommendedCourses } from "../app/career/data.ts";
 
 test("mandatory onboarding rejects missing answers and out-of-scale grades", () => {
   assert.equal(validProfile(exampleProfile), true);
@@ -22,4 +22,16 @@ test("readiness uses submitted evidence and stays within percentage bounds", () 
   const prepared = reportScores({ ...exampleProfile, experience: "experienced", proficiency: "advanced", cvConfidence: "ready", interview: "high", linkedin: "https://example.com", portfolio: "https://example.com", certifications: "Certificate" });
   assert.ok(starting.every((score, i) => score < prepared[i]));
   assert.ok([...starting, ...prepared].every(score => score >= 0 && score <= 100));
+});
+
+test("course suggestions follow the selected career field", () => {
+  const business = recommendedCourses("business");
+  const data = recommendedCourses("data");
+  const marketing = recommendedCourses("marketing");
+  assert.equal(business.length, 3);
+  assert.ok(business.some(course => course.id === "excel"));
+  assert.ok(data.some(course => course.id === "sql"));
+  assert.ok(marketing.some(course => course.id === "digital-marketing"));
+  assert.ok(!business.some(course => course.id === "digital-marketing"));
+  assert.ok([...business, ...data, ...marketing].every(course => course.url.startsWith("https://")));
 });

@@ -70,7 +70,7 @@ export default function CareerWorkspace({active,entry,exit}:{active:boolean;entr
       <small>{t(["No password or verification is needed for this demonstration.","এই ডেমোতে পাসওয়ার্ড বা যাচাই প্রয়োজন নেই।"])}</small>
     </section></main>}
     {phase==="questionnaire"&&<Questionnaire profile={profile} update={update} language={language} onComplete={()=>{setAssessment({...profile});setPhase("analysis");}}/>}
-    {phase==="analysis"&&<Analysis language={language} onComplete={()=>{setStatuses(s=>({...s,goals:"done"}));setPage(entry);setPhase("ready");}}/>}
+    {phase==="analysis"&&<Analysis language={language} onComplete={()=>{setPage(entry);setPhase("ready");}}/>}
   </div>;
   return <div className="career-app career-shell" lang={language}>
     <a className="career-skip" href="#career-content">{t(["Skip to content","মূল অংশে যান"])}</a>

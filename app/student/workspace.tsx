@@ -29,7 +29,8 @@ import {
 } from "./studio";
 import { ToolWorkspace } from "./tool-workspace";
 import { MyProfile } from "./profile";
-import { Pathway, SupportActions } from "./legacy-panels";
+import { SupportActions } from "./legacy-panels";
+import { StudyAbroadEntry } from "./entry";
 import "./workspace.css";
 import "./workspace-surfaces.css";
 
@@ -38,7 +39,6 @@ type Page =
   | "match"
   | "programs"
   | "documents"
-  | "pathway"
   | "tracker"
   | "profile"
   | "tool"
@@ -62,7 +62,6 @@ const navigation: { heading: string; items: { id: Page; label: string }[] }[] =
     {
       heading: "My Journey",
       items: [
-        { id: "pathway", label: "My Pathway" },
         { id: "tracker", label: "Application Tracker" },
         { id: "profile", label: "My Profile" },
       ],
@@ -76,6 +75,7 @@ export default function Workspace({
   exit: () => void;
   openCareerGuide: () => void;
 }) {
+  const [entryComplete, setEntryComplete] = useState(false);
   const [page, setPage] = useState<Page>("catalog");
   const [profile, setProfile] = useState<Profile>(initialProfile);
   const [filters, setFilters] = useState(() => profileFilters(initialProfile));
@@ -114,7 +114,7 @@ export default function Workspace({
   useEffect(() => {
     window.scrollTo({ top: 0 });
     mainRef.current?.focus({ preventScroll: true });
-  }, [page, detail]);
+  }, [page, detail, entryComplete]);
   const navigate = (next: Page) => {
     setPage(next);
     setDetail(null);
@@ -222,6 +222,12 @@ export default function Workspace({
       </div>
     </>
   );
+  if (!entryComplete) {
+    return <StudyAbroadEntry exit={exit} onContinue={(name, email) => {
+      setProfile((current) => ({ ...current, name, email }));
+      setEntryComplete(true);
+    }} />;
+  }
   return (
     <main className="sa-portal hub">
       <a className="hub-skip-link" href="#student-content">
@@ -415,9 +421,6 @@ export default function Workspace({
                 onReview={(id) => openReview(null, id, "documents")}
                 onNewReview={() => openReview(null, null, "documents")}
               />
-            )}
-            {page === "pathway" && (
-              <Pathway profile={profile} openCareerGuide={openCareerGuide} />
             )}
             {page === "tracker" && (
               <>
